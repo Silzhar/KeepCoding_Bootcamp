@@ -46,14 +46,11 @@ morse =  {
     '!': '——··——'
 }
 
-Entrada de mensaje
 
 for letra in cadena:
-    
-    
-
-    if posicion == len(letras):
-        print('no encontrado')
+    if letra in morse:
+        print("{}: {}".format(letra, morse[letra]))
     else:
-        # obtener simbolo morse de posicion = posicion
-        print("{} - {}".format(letra, simbolos[posicion]))
+        print(' ')
+
+

@@ -46,7 +46,6 @@ morse =  {
     '!': '——··——'
 }
 
-Entrada de mensaje
 
 for letra in cadena:
     posicion = 0 
