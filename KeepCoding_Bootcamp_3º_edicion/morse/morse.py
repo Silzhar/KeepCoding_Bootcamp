@@ -44,6 +44,11 @@ morse =  {
     '!': '——··——'
 }
 
+reverso = {}
+
+for key in morse:
+    valor = morse[key]
+    reverso[valor] = key
 
 def toMorse(texto):
     texto = texto.upper()
@@ -58,6 +63,9 @@ def toMorse(texto):
             resultado += "&"
 
     return resultado
+
+def toPlain(codigo):
+    
             
 
 
