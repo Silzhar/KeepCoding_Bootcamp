@@ -1,4 +1,5 @@
 import morse
+import time
 
 mensaje = input("Entrada de texto :")
 
@@ -7,3 +8,5 @@ print(telegrama)
 
 telegramaTraduccion = morse.toPlain(mensaje)
 print(telegramaTraduccion)
+
+print(time.strftime")
