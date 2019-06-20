@@ -6,6 +6,8 @@ class Translator(ttk.frame):
     def __init__(self, parent, **kwargs):
         ttk.Frame.__init__(self, parent, height=kwargs['height'], width=kwargs['width'])
 
+        self.traduccionDirecta = True
+
         self.sender = StringVar()
         self.receiver = StringVar()
 
@@ -19,24 +21,44 @@ class Translator(ttk.frame):
         self.receiver_entry = ttk.Entry(self, width=16, textvariable=self.receiver)
         self.receiver_entry.place(x=318, y=10)
         
-        origin_lbl = ttk.Label(self, text="Plano", width=5, anchor=W)
-        origin_lbl.place(x=12, y=40)
-        origin_text = Text(self, width=26,height=8)
-        origin_text.place(x=32, y=60)
+        self.origin_lbl = ttk.Label(self, text="Plano", width=5, anchor=W)
+        self.origin_lbl.place(x=12, y=40)
+        self.origin_text = Text(self, width=26,height=8)
+        self.origin_text.place(x=32, y=60)
 
-        destino_lbl = ttk.Label(self, text="Morse", width=5, anchor=W)
-        destino_lbl.place(x=250, y=40)
-        destino_text = Text(self, width=27,height=8)
-        destino_text.place(x=270, y=60)
+        self.destino_lbl = ttk.Label(self, text="Morse", width=5, anchor=W)
+        self.destino_lbl.place(x=250, y=40)
+        self.destino_text = Text(self, width=27,height=8)
+        self.destino_text.place(x=270, y=60)
 
-        btn_send = ttk.Button(self, command=None,text="Send")
+        btn_send = ttk.Button(self, command=self.send_telegram,text="Send")
         btn_send.place(y=160, x=500)
 
         btn_change = ttk.Button(self,command=None, text="<=>")
-        btn_change.place
+        btn_change.place(y=140, x=500)
+
+        btn_traduce = ttk.Button(self,command=self.traduce, text="Traduce")
+        btn_traduce.place(y=115, x=500)
+
+    def traduce(self):
+        texto_original = self.origin_text.get(1)
+        if self.traduccionDirecta:
+            traduccion = morse.toMorse(texto_original)
+        else:
+            traduccion = morse.toPlain(texto_original)
+        print(traduccion)
 
     def send_telegram(self):
         print("Enviar telegrama")
+
+    def changeText(self):
+        if self.traduccionDirecta:
+            self.origin_lbl.config(text="Morse")
+            self.destino_lbl.config(text="Plano")
+        else:
+            self.origin_lbl.config(text="Plano")
+            self.destino_lbl.config(text="Morse")
+
 
 class MainApp(tk): # tk para crear ventana (hereda de tk)
     def __init__(self):
