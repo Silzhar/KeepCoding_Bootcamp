@@ -24,10 +24,19 @@ class Translator(ttk.frame):
         origin_text = Text(self, width=26,height=8)
         origin_text.place(x=32, y=60)
 
-        destino_lbl = ttk.Label(self, text="Plano", width=5, anchor=W)
+        destino_lbl = ttk.Label(self, text="Morse", width=5, anchor=W)
         destino_lbl.place(x=250, y=40)
         destino_text = Text(self, width=27,height=8)
         destino_text.place(x=270, y=60)
+
+        btn_send = ttk.Button(self, command=None,text="Send")
+        btn_send.place(y=160, x=500)
+
+        btn_change = ttk.Button(self,command=None, text="<=>")
+        btn_change.place
+
+    def send_telegram(self):
+        print("Enviar telegrama")
 
 class MainApp(tk): # tk para crear ventana (hereda de tk)
     def __init__(self):
