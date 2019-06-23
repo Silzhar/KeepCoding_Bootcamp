@@ -7,7 +7,7 @@ print("Total de letras :",totalLetras)
 
 
 '''
-
+'''
 
 abecedario = {
             'A','a',
@@ -56,6 +56,7 @@ for abecedario in string:
 print("Total de letras :",totalLetras)
 
 '''
+'''
 
 import collections
 
@@ -66,3 +67,10 @@ for string in abecedario:
     print("Total de letras :",totalLetras)
 
 '''
+# posible solucion al ejercicio. de momento funciona
+
+from collections import Counter
+
+string = input("Escriba aquí :")
+
+print(Counter(string))
