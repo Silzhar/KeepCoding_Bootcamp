@@ -1,7 +1,11 @@
 '''
 string = input("Escriba aquí :")
 totalLetras = len(string)
+if len(string) == " ":
+    totalLetras - 1
 print("Total de letras :",totalLetras)
+
+
 '''
 
 
@@ -40,11 +44,13 @@ abecedario = {
 string = input("Escriba aquí :")
 totalLetras = 0
 
-for x in abecedario:
-    if string in  abecedario:  # if abecedario.has_key(string):
+for abecedario in string:
+    if abecedario in string:  # if abecedario.has_key(string):
         totalLetras += 1
+        if len(string) == ' ':
+            totalLetras - 1
             
-    elif string in abecedario == 0:
+    elif totalLetras == 0:
         print("Ha introdducido una cadena vacía")
 
 print("Total de letras :",totalLetras)
