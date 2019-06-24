@@ -21,7 +21,7 @@ class Translator(ttk.frame):
         self.receiver_entry = ttk.Entry(self, width=16, textvariable=self.receiver)
         self.receiver_entry.place(x=318, y=10)
         
-        self.origin_text.blind('<KeyRelease>'self.modificaOrigin)
+        self.origin_text.blind('<KeyRelease>'self.traduce)
 
         self.origin_lbl = ttk.Label(self, text="Plano", width=5, anchor=W)
         self.origin_lbl.place(x=12, y=40)
@@ -42,10 +42,8 @@ class Translator(ttk.frame):
         btn_traduce = ttk.Button(self,command=self.traduce, text="Traduce")
         btn_traduce.place(y=115, x=500)
 
-    def modificaOrigin(self, e):
-        self.traduce()
 
-    def traduce(self):
+    def traduce(self, e=None):
         texto_original = self.origin_text.get("1.0","end-1c")
         if self.traduccionDirecta:
             traduccion = morse.toMorse(texto_original)
