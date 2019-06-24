@@ -1,6 +1,8 @@
 import morse
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
+
 
 class Translator(ttk.frame):
     def __init__(self, parent, **kwargs):
@@ -39,9 +41,6 @@ class Translator(ttk.frame):
         btn_change = ttk.Button(self,command=None, text="<=>")
         btn_change.place(y=140, x=500)
 
-        btn_traduce = ttk.Button(self,command=self.traduce, text="Traduce")
-        btn_traduce.place(y=115, x=500)
-
 
     def traduce(self, e=None):
         texto_original = self.origin_text.get("1.0","end-1c")
@@ -54,8 +53,39 @@ class Translator(ttk.frame):
         
 
     def send_telegram(self):
-        print("Enviar telegrama")
+        sender = self.sender.get()
+        receiver = self.receiver.get()
+        if self.traduccionDirecta:
+            msg = self.origin_text.get("1.0","end-1c")
+        else:
+            msg = self.destino_text.get("1.0","end-1c")
 
+        if sender.strip() =="":
+            menssagebox.showwarning("Aviso","Debe rellenar el sender",parent=self, icon=messagebox.WARNING)
+        if receiver.strip() =="":
+            menssagebox.showwarning("Aviso","Debe rellenar el receiver",parent=self, icon=messagebox.WARNING)
+
+
+        if self.sender.get() == "":
+            print("Debe rellenar el sender")
+            messagebox.showwarning("Debe rellenar el sender",parent=self, icon=messagebox.WARNING)
+            return
+
+        if self.receiver.get() =="":
+            print("Debe rellenar el receiver")
+            messagebox.showwarning("Debe rellenar el receiver",parent=self, icon=messagebox.WARNING)
+            return
+
+        if ms.strip() =="":
+            messagebox.showwarning("Aviso", "")
+            return
+
+        if self.traduccionDirecta:
+            morse.telegram(self.sender.get(), self.receiver.get(), self.origin_text.get("1.0", "end-1c"))
+        else:
+            morse.telegram(self.sender.get(), self.receiver.get(), self.destino_text.get("1.0", "end-1c"))
+
+        morse.telegram()
     def changeText(self):
         self.origin_text.delete("1.0", END)
         if self.traduccionDirecta:
