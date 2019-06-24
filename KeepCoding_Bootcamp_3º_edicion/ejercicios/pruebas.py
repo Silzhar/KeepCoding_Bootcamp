@@ -1,4 +1,4 @@
-'''
+
 
 string = input("Escriba aquí :")
 
@@ -35,18 +35,10 @@ abecedario = {
 
         }
 
-for letras in string:
-    if string == abecedario:
+for x in string:
+    if x in  abecedario:  
         totalLetras += 1
-    if letras == (' '):
+    if x == (' '):
         totalLetras - 1
 
 print("Total de letras :",totalLetras)
-
-'''
-
-from collections import Counter
-
-string = input("Escriba aquí :")
-
-print(Counter(string))
