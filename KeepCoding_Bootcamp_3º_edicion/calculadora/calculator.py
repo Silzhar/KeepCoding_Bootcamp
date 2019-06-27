@@ -91,6 +91,7 @@ class Calculator(ttk.Frame):
     _op1 = None
     _op2 = None
     _operador = None
+    _swBorrado = True
 
     def __init__(self, parent, **kwargs):
         ttk.Frame.__init__(self, parent, height=kwargs['height'], width=kwargs['width'])
@@ -116,12 +117,27 @@ class Calculator(ttk.Frame):
         CalcButton(self, text=",", command=lambda: self.opera(",")).grid(column=2, row=5)
         CalcButton(self, text="=", command=lambda: self.opera("=")).grid(column=3, row=5)
 
+    def addDigit(self, digito):
+        if self._swBorrado:
+            if self._operador != None:
+                self.display.reset()
+                self._swBorrado = False
+
+        self.display.addDigit(digito)
+        
+
+    def reset(self):
+        self._op1 = None
+        self._op2 = None
+        self._operador = None
+        self.display.reset()
+
 
     def opera(self, operador):
         if self._op1 is None:
             self._op1 = float(self.display._value)
             self._operador = operador
-            self.display.reset()
+            self._swBorrado = True
         else:
             self._op2 = float(self.display._value)
             if self._operador == '+':
@@ -138,8 +154,10 @@ class Calculator(ttk.Frame):
             resultado = str(resultado)
             self.display._value = resultado
             self.display.pintar()
-            
 
+            self._op2 = None
+            self._swBorrado = True
+            
 
 
 
