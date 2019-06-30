@@ -1,29 +1,37 @@
-numero1 = input("Primer valor :")
-numero2 = input("Segundo valor :")
 
-def validar(val1, val2):
-    if val1.isdigit() == True and val2.isdigit() == True:
+
+def validar(numeros):
+    val1 = input("Primer valor :")
+    
+    if val1.isdigit() == True:
         val1 = int(val1)
+        
+    else:
+        val1 = input("Error,inserte un valor :")
+        if val1.isdigit():
+            val1 = int(val1)
+        
+    val2 = input("Segundo valor :")
+    
+    if val2.isdigit() == True:
         val2 = int(val2)
        
-    elif val1.isalpha():
-        val1 = input("Error,inserte un valor :")
-        val1 = int(val1)
-        val1 = numero1
-        return val1
-    
-    elif val2.isalpha():
+    else:
         val2 = input("Error,inserte un valor :")
         val2 = int(val2)
         val2 = numero2
         return val2
 
+    return val1 , val2
 
-    return val1, val2
 
-validar(numero1,numero2)
-valor1 = numero1
-valor2 = numero2
+numero1 = val1
+numero2 = val2
+
+valores = validar(val1)
+
+valor1 = valores[0]
+valor2 = valores[1]
 
 
 
@@ -67,3 +75,16 @@ print("Suma :{} Resta :{} Producto :{} División :{} ".format(round(suma,2),roun
         return val1, val2
 
         '''
+
+'''   
+    elif val1.isalpha():
+        val1 = input("Error,inserte un valor :")
+        val1 = int(val1)
+        val1 = numero1
+        return val1
+    
+    elif val2.isalpha():
+        val2 = input("Error,inserte un valor :")
+        val2 = int(val2)
+        val2 = numero2
+        return val2   '''
