@@ -7,7 +7,7 @@ def enteros(numero1, numero2):
         int(numero2)
         return True
     except:
-        False
+      False
 
 def validar(val1 , val2):
     
