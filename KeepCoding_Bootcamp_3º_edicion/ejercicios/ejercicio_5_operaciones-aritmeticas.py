@@ -1,42 +1,41 @@
+numero1 = input("Primer valor :")
+numero2 = input("Segundo valor :")
 
-
-def validar(numeros):
-    val1 = input("Primer valor :")
+def validar(val1 , val2):
     
     if val1.isdigit() == True:
         val1 = int(val1)
         
     else:
-        val1 = input("Error,inserte un valor :")
-        if val1.isdigit():
-            val1 = int(val1)
+        while val1.isdigit() == False:
+            val1 = input("Error en primer valor,inserte un número :")
+            if val1.isdigit():
+                val1 = int(val1)
+                break
         
-    val2 = input("Segundo valor :")
+
     
     if val2.isdigit() == True:
         val2 = int(val2)
        
     else:
-        val2 = input("Error,inserte un valor :")
-        val2 = int(val2)
-        val2 = numero2
-        return val2
+        while val2.isdigit() == False:
+            val2 = input("Error en segundo valor,inserte un número  :")
+            if val2.isdigit():
+                val2 = int(val2)
+                break
+     
 
     return val1 , val2
 
 
-numero1 = val1
-numero2 = val2
+entrada = validar( numero1, numero2)
 
-valores = validar(val1)
-
-valor1 = valores[0]
-valor2 = valores[1]
+if entrada:
+    valor1 = entrada[0]
+    valor2 = entrada[1]
 
 
-
-  #  valor1 = int(numero1)
-  #  valor2 = int(numero2)
 suma = valor1 + valor2
 resta = valor1 - valor2
 producto = valor1 * valor2
