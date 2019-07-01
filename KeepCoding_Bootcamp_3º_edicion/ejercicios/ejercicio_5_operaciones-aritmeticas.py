@@ -1,6 +1,14 @@
 numero1 = input("Primer valor :")
 numero2 = input("Segundo valor :")
 
+def enteros(numero1, numero2):
+    try:
+        int(numero1)
+        int(numero2)
+        return True
+    except:
+        False
+
 def validar(val1 , val2):
     
     if val1.isdigit() == True:
@@ -29,7 +37,9 @@ def validar(val1 , val2):
     return val1 , val2
 
 
+enteros(numero1, numero2)
 entrada = validar( numero1, numero2)
+
 
 if entrada:
     valor1 = entrada[0]
