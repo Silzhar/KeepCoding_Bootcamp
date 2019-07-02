@@ -8,10 +8,10 @@ _fps = 60
 class Raquet(pg.Surface):
     x = 0
     y = 0
-    w = 16
-    h = 96
+    w = 16  # ancho
+    h = 96  # alto 
     color = (255, 255, 255)
-    velocidad = 40
+    velocidad = 5
     diry = 1
 
     def __init__(self):
@@ -106,11 +106,26 @@ class Game:
                 if event.type == KEYDOWN:
                     if event.key == K_UP:
                         self.player1.diry = -1
+                        self.player1.velocidad = 15
                         self.player1.avanza()
 
                     if event.key == K_DOWN:
                         self.player1.diry = 1
-                        self.player1.avanza()                    
+                        self.player1.velocidad = 15
+                        self.player1.avanza()  
+
+            keys_pressed = pg.key.get_pressed()
+            if keys_pressed[K_UP]:
+                self.player1.diry = -1
+                if self.player1.velocidad < 15:
+                    self.player1.velocidad += 1
+                self.player1.avanza()
+                                 
+            if keys_pressed[K_DOWN]:
+                self.player1.diry = 1
+                if self.player1.velocidad < 15:
+                    self.player1.velocidad += 1
+                self.player1.avanza()
 
             #Modifica la posición de ball
             self.ball1.avanza()
