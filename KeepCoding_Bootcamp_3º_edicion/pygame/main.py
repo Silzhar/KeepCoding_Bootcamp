@@ -44,6 +44,7 @@ class Ball(pg.Surface):
     velocidad = 5
     dirx = 1
     diry = 1
+    
 
     def __init__(self):
         pg.Surface.__init__(self, (self.w, self.h))
@@ -70,6 +71,8 @@ class Ball(pg.Surface):
         self.x = 392
         self.y = 292
         self.diry = random.choice([-1,1])
+        self.cuentatoques = 0
+        self.velocidad = 5
 
         if ganador == 1:
             self.dirx = -1
@@ -104,6 +107,20 @@ class Ball(pg.Surface):
             self.x += self.dirx
 
             self.sound.play()
+            self.cuentatoques += 1
+
+
+            '''
+            if self.cuentatoques <= 4:
+                self.velocidad = 5
+            elif self.cuentatoques <=9:
+                self.velocidad = 8
+            else:
+                self.velocidad = 14    '''
+
+            if self.velocidad <=14:
+                self.velocidad += 0.5 # es equivalente  self.velocidad = min(14, self.velocidad + 0.5)
+
 
 
 class Game:
@@ -239,8 +256,9 @@ class Game:
         self.screen.blit(self.ball1, (self.ball1.x, self.ball1.y))
         self.screen.blit(self.player1, (self.player1.x, self.player1.y))
         self.screen.blit(self.player2, (self.player2.x, self.player2.y))
-        self.screen.blit(self.marcador2, (32, 8))
-        self.screen.blit(self.marcador1, (720, 8))
+
+        self.screen.blit(self.marcador2, (40, 8))
+        self.screen.blit(self.marcador1, (760-self.marcador1.get_rect().w , 8))
 
         if self.winner:
             rect = self.winner.get_rect()
