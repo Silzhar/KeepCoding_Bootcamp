@@ -49,7 +49,8 @@ class Ball(pg.Surface):
         pg.Surface.__init__(self, (self.w, self.h))
         self.fill(self.color)
 
-        self.sound = pg.mixer.Sound(os.getcwd()+'/assets/sonido.aiff')
+        self.sound = pg.mixer.Sound('/home/silzhar/Documentos/KeepCoding_Bootcamp/KeepCoding_Bootcamp_3º_edicion/pygame/esquivar.aiff') # os.getcwd()+
+        
 
     '''
     def color(self, valor=None):
@@ -127,7 +128,7 @@ class Game:
 
         self.player2 = Raquet()
 
-        self.fuente = pg.font.Font(os.getcwd()+'/assets/font.ttf', 48)
+        self.fuente = pg.font.Font('font.ttf', 48)  # os.getcwd()
         self.iniciopartida()
         
     def iniciopartida(self):
