@@ -32,11 +32,11 @@ validarDatos = datos(personas, pizzas)
 
 if validarDatos[0] % 2 == 0:  
     porciones = validarDatos[0] * validarDatos[1]
-    print("Total de porciones  :{}".format(porciones))
+    print("Total de porciones  :{} ".format(porciones))
 
 elif validarDatos[0] % 2 != 0:
     porciones = (validarDatos[0]+ 1) * validarDatos[1]
-    print("Total de porciones :{}".format(porciones))
+    print("Total de porciones :{}, sobran {} trozos".format(porciones, validarDatos[1]))
 
 
  
