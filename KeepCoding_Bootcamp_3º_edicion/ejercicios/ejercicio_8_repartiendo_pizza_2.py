@@ -1,9 +1,9 @@
 personas = input("Personas en reunión :")
-pizzas = input("Total de pizzas :")
+porciones = input("Porciones por persona :")
 
 def datos(participantes, comida):
     participantes = personas
-    comida = pizzas
+    comida = porciones
 
     try:
         participantes = int(participantes)
@@ -29,16 +29,14 @@ def datos(participantes, comida):
     return participantes, comida
 
 
-validarDatos = datos(personas, pizzas)
+validarDatos = datos(personas, porciones)
 
 
 if validarDatos[0] % 2 == 0:  
-    porciones = validarDatos[0] * validarDatos[1]
-    print("Total de porciones  :{} ".format(porciones))
+    pizzas = validarDatos[0] / validarDatos[1]
+    print("Total de pizzas  :{} ".format(pizzas))
 
 elif validarDatos[0] % 2 != 0:
-    porciones = (validarDatos[0]+ 1) * validarDatos[1]
-    print("Total de porciones :{}, sobran {} trozos".format(porciones, validarDatos[1]))
+    pizzas = (validarDatos[0]+ 1) / validarDatos[1]
+    print("Total de pizzas :{}, sobran {} trozos".format(round(pizzas), validarDatos[1]))
 
-
- 
