@@ -1,44 +1,62 @@
 
+ancho = input("Ancho de la habitación  :")
+fondo = input("Fondo de la habitanción  :")
 
-string = input("Escriba aquí :")
+def entradas(pared1 , pared2): #probar salida en tupla
+    try:
+        pared1 = int(pared1)
 
-totalLetras = 0
+    except:
+        while pared1 is not True:
+            pared1 = input("Es necesario un valor numérico. Introduzca un número para el ancho :")
+            if pared1.isdigit():
+                pared1 = int(pared1)
+                break
 
-abecedario = {
-            'A','a',
-            'B','b',
-            'C','c',
-            'D','d',
-            'E','e',
-            'F','f',
-            'G','g',
-            'H','h',
-            'I','i',
-            'J','j',
-            'K','k',
-            'L','l',
-            'M','m',  
-            'N','n',
-            'Ñ','ñ',
-            'O','o',
-            'P','p',
-            'Q','q',
-            'R','r',
-            'S','s',
-            'T','t',
-            'U','u',
-            'V','v',
-            'W','w',
-            'X','x',
-            'Y','y',
-            'Z','z'
+    try:
+        pared2 = int(pared2)
 
-        }
+    except:
+        while pared2 is not True:
+            pared2 = input("Es necesario un valor numérico. Introduzca un número para el fondo :")
+            if pared2.isdigit():
+                pared2 = int(pared2)
+                break
 
-for x in string:
-    if x in  abecedario:  
-        totalLetras += 1
-    if x == (' '):
-        totalLetras - 1
 
-print("Total de letras :",totalLetras)
+    return pared1, pared2
+           
+              
+'''
+def habitacion(pared1, pared2):
+    
+    if pared1.isdigit():
+        pared1 = int(pared1)
+           
+    else:
+        while pared1 == False:
+            pared1 = input("Es necesario un valor numérico. Introduzca un número para el ancho :")
+
+    if pared2.isdigit():
+        pared2 = int(pared2)
+    
+        
+    else:   
+        while pared2 == False:
+            pared2 = input("Es necesario un valor numérico. Introduzca un número para el fondo :")
+        
+
+    return pared1, pared2   '''
+        
+
+
+metrosCuadrados =  entradas(ancho, fondo)
+#metrosCuadrados = habitacion(ancho, fondo)
+
+if metrosCuadrados:
+    ancho = metrosCuadrados[0]
+    fondo = metrosCuadrados[1]
+
+    superficie = ancho + fondo
+    yardas = superficie / 0.9144
+    print("La habitación mide {} metros cuadrados, en yardas : {}".format(round(superficie, 2), round(yardas, 2)))
