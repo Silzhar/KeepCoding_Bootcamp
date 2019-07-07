@@ -11,7 +11,7 @@ def enteros(numero1, numero2):
 
 def validar(val1 , val2):
     
-    if val1.isdigit() == True:
+    if val1.isdigit():
         val1 = int(val1)
         
     else:
@@ -23,7 +23,7 @@ def validar(val1 , val2):
         
 
     
-    if val2.isdigit() == True:
+    if val2.isdigit():
         val2 = int(val2)
        
     else:
