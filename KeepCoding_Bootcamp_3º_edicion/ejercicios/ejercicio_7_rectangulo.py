@@ -1,7 +1,7 @@
 ancho = input("Ancho de la habitación  :")
 fondo = input("Fondo de la habitanción  :")
 
-formato = input("Elija formato: yardas (Y) o metros (M) ")
+formato = input("Elija formato: yardas (Y) o metros (M) : ")
 
 def entradas(pared1 , pared2): #probar salida en tupla
     try:
@@ -36,6 +36,7 @@ if formato.upper() == 'M':
 
         superficie = ancho + fondo
         yardas = superficie / 0.9144
+        print('')
         print("La habitación mide {} metros cuadrados, en yardas : {}".format(round(superficie, 2), round(yardas, 2)))
 
 
@@ -48,4 +49,5 @@ else:
 
         superficie = ancho + fondo
         metros = superficie * 0.9144
+        print('')
         print("La habitación mide {} yardas cuadradas, en metros cuadrados : {}".format(round(superficie, 2), round(metros, 2)))

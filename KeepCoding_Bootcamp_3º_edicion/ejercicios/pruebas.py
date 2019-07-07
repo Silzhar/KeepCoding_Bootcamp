@@ -1,62 +1,9 @@
-
-ancho = input("Ancho de la habitación  :")
-fondo = input("Fondo de la habitanción  :")
-
-def entradas(pared1 , pared2): #probar salida en tupla
-    try:
-        pared1 = int(pared1)
-
-    except:
-        while pared1 is not True:
-            pared1 = input("Es necesario un valor numérico. Introduzca un número para el ancho :")
-            if pared1.isdigit():
-                pared1 = int(pared1)
-                break
-
-    try:
-        pared2 = int(pared2)
-
-    except:
-        while pared2 is not True:
-            pared2 = input("Es necesario un valor numérico. Introduzca un número para el fondo :")
-            if pared2.isdigit():
-                pared2 = int(pared2)
-                break
+entrada = int(input("Numero : "))
 
 
-    return pared1, pared2
-           
-              
-'''
-def habitacion(pared1, pared2):
-    
-    if pared1.isdigit():
-        pared1 = int(pared1)
-           
-    else:
-        while pared1 == False:
-            pared1 = input("Es necesario un valor numérico. Introduzca un número para el ancho :")
 
-    if pared2.isdigit():
-        pared2 = int(pared2)
-    
-        
-    else:   
-        while pared2 == False:
-            pared2 = input("Es necesario un valor numérico. Introduzca un número para el fondo :")
-        
+if entrada % 2 ==  0:
+    print(" A ")
 
-    return pared1, pared2   '''
-        
-
-
-metrosCuadrados =  entradas(ancho, fondo)
-#metrosCuadrados = habitacion(ancho, fondo)
-
-if metrosCuadrados:
-    ancho = metrosCuadrados[0]
-    fondo = metrosCuadrados[1]
-
-    superficie = ancho + fondo
-    yardas = superficie / 0.9144
-    print("La habitación mide {} metros cuadrados, en yardas : {}".format(round(superficie, 2), round(yardas, 2)))
+elif entrada % 2 != 0:
+    print(" MAAAAL !")
