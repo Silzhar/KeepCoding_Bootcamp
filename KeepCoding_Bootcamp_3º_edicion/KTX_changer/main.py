@@ -1,2 +1,4 @@
 from tkinter import * 
-from tkonter import ttk
+from tkinter import ttk
+
+import configparser
