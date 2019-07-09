@@ -30,6 +30,14 @@ class Exchanger(ttk.Frame):
         frInCurrency = ttk.Frame(self)
         frInCurrency.pack_propagate(0)
 
+        frErrorMenssages = ttk.Frame(self, height=40)
+        frErrorMenssages.place(x=0, y=360)
+        frErrorMenssages.pack_propagate(0)
+
+        self.lblErrorMenssages = ttk.Label(frErrorMenssages,text="",whidth=50, foreground='red',anchor=CENTER )
+        self.lblErrorMenssages.pack(side=BOTTOM, fill=X, expand=True)
+
+
         lblQ = ttk.Label(frInCurrency, text="Cantidad")
         lblQ.pack(side=TOP, fill=X, padx=DEFAULTPADDING, pady=DEFAULTPADDING)
 
@@ -57,6 +65,8 @@ class Exchanger(ttk.Frame):
         
         frOutCurrency.pack(side=LEFT, fill=BOTH, expand=True)
 
+        
+
     def validarCantidad(self, *args):
         try:
             v = float(self.strInQuantity.get())
@@ -76,18 +86,33 @@ class Exchanger(ttk.Frame):
         _from = _from[:3]
         _to = self.strOutCurrency.get()
         _to = _to[:3]
+        symbols = _from+","+_to     #   symbols = "{},{}".format(_from,_to)
         self.strInCurrency.get()
         
         if self.strInCurrency.get() and self.strOutCurrency.get() and self.strInQuantity.get():
             # llama a fixer.io las 2 veces
-            response = requests.get(self.rate_ep.format(self.api_key, base, _from))
+            response = requests.get(self.rate_ep.format(self.api_key, base, symbols))
+
+            self.lblErrorMenssages.config(text='Conectando ')
 
             if response.status_code == 200:
                 data = json.loads(response.text)
-                tasa_conversion = data['rates'][_from]
+                if data['success']:
+                    tasa_conversion = data['rates'][_from]
+                    tasa_conversion2 = data['rates'][_to]
+                    self.lblErrorMenssages.config(text='')
+                else:
+                    msgError = "{} - {}".format(data['error']['code'] , data ['error']['type'])
+                    print(msgError)
+
             else:
-                print("Se ha producido error al consultar fixer.io ",response.status_code)
+                msgError = "Se ha producido error al consultar fixer.io "+ response.status_code
+                print(msgError)
+                
+                self.lblErrorMenssages.config(text=msgError)
                 return
+
+            ''' segunda llamada 
 
             response = requests.get(self.rate_ep.format(self.api_key, base, _to))
             if response.status_code == 200:
@@ -95,7 +120,7 @@ class Exchanger(ttk.Frame):
                 tasa_conversion2 = data['rates'][_to]
             else:
                 print("Se ha producido error al consultar fixer.io ",response.status_code)
-                return
+                return   '''
 
             valor_label = round(float(self.strInQuantity.get()) / tasa_conversion * tasa_conversion2, 4)
             self.outQuantityLbl.config(text=valor_label)
@@ -114,7 +139,11 @@ class Exchanger(ttk.Frame):
                 result.append(text)
             return result
         else:
-            print("Se ha producido un error al consultar symbols:", response.status_code)
+            msgError = "Se ha producido error al consultar fixer.io "+ response.status_code
+            print(msgError)
+                
+            self.lblErrorMenssages.config(text=msgError)
+            return
 
 
 
