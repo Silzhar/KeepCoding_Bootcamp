@@ -31,8 +31,10 @@ class Exchanger(ttk.Frame):
         frErrorMessages.pack(side=BOTTOM, fill=X)
         frErrorMessages.pack_propagate(0)
 
-        self.lblErrorMenssages = ttk.Label(frErrorMenssages,text="",whidth=50, foreground='red',anchor=CENTER )
-        self.lblErrorMenssages.pack(side=BOTTOM, fill=BOTH, expand=True)
+
+
+        self.lblErrorMessages = ttk.Label(frErrorMessages, text="", width=50, foreground='red', anchor=CENTER)
+        self.lblErrorMessages.pack(side=BOTTOM, fill=BOTH, expand=True)
 
         frInCurrency = ttk.Frame(self)
         frInCurrency.pack_propagate(0)
@@ -150,7 +152,7 @@ class MainApp(Tk):
 if __name__ == '__main__':
    exchanger = MainApp()
    exchanger.start()
-   
+
 '''
 config = configparser.ConfigParser()
 config.read('config.ini')
