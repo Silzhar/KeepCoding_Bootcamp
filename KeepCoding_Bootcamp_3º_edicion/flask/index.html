@@ -16,6 +16,12 @@
             h1.titulo-pagina {
                 text-decoration: underline;
             }
+
+            button {
+                font-size: 2em;
+                border: 3px solid orangered;
+                margin-top: 8px;
+            }
         
         </style>
 
@@ -38,10 +44,34 @@
                 <li>Item</li>
                 <li>Item</li>
         </ul>
+
         <div style="border: 1px solid black">
             recuadros para ventanas
 
         </div>
+
+        <form>
+            <input type="text" name="usuario" id="usuario"><br/>
+            <input type="password" name="contrasena" id="contrasena"><br/>
+            <input type="radio" name="marca" value="maxitrail">Maxitrail
+            <input type="radio" name="marca" value="supertouring">Supertouring
+            <input type="radio" name="marca" value="sport">Sport
+            <input type="radio" name="marca" value="custom">Custom<br/>
+            <input type="checkbox" name="modelo" value="nuevo">Nuevo
+            <input type="checkbox" name="modelo" value="antiguo">Antíguo
+            <select name= "marcas">
+                <option value="bmw">BMW</option>
+                <option value="harley-davidson">Harley Davidson</option>
+                <option value="kawasaki">Kawasaki</option>
+                <option value="ktm">KTM</option>
+                <option value="honda">Honda</option>
+                <option value="suzuki">Suzuki</option>
+            </select>
+            <button type="submit">PULSAR</button>
+
+        </form>
+
+        
 
 
 
