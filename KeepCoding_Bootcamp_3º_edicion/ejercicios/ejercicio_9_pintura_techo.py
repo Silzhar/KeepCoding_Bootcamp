@@ -8,23 +8,21 @@ fondoTecho = input("Introduzca el fondo del techo a pintar :")
 
 
 def entradas(ancho, fondo):
-#    ancho = anchoTecho
- #   fondo = fondoTecho
 
-    try:
+    if ancho.isdigit():
         ancho = int(ancho)
-        
-    except ValueError :
+
+    else:     
         while ValueError :
             ancho = input("Introduzca un número y que sea positivo para el ancho :")
             if ancho.isdigit():
                 ancho = int(ancho)
                 break
 
-    try:
-        fondo = int(fondo)
 
-    except ValueError:
+    if fondo.isdigit():
+        fondo = int(fondo)
+    else:
         while ValueError :
             fondo= input("Introduzca un número y que sea positivo para el fondo :")
             if fondo.isdigit():
