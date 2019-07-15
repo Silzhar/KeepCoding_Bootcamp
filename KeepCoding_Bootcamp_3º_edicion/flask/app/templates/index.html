@@ -11,14 +11,18 @@
             <th>Unidad pagada</th>
             <th>Cantidad pagada</th>
         </tr>
+        {% for movimiento in movimientos %}
         <tr>
-            <th>11/7/2019</th>
-            <th>Primera compra</th>
-            <th>BTC</th>
-            <th>Cantidad comparada</th>
-            <th>Precio unitario</th>
-            <th>Unidad pagada</th>
-            <th>Cantidad pagada</th>
+            <th>{{movimiento[0]}}</th>
+            <th>{{movimiento[1]}}</th>
+            <th>{{movimiento[2]}}</th>
+            <th>{{movimiento[3]}}</th>
+            <th>{{movimiento[6]}}</th>
+            <th>{{movimiento[5]}}</th>
+            <th>{{movimiento[4]}}</th>
         </tr>
-    </table>    
+        {% endfor %}
+
+    </table>  
+
 {% endblock %}
