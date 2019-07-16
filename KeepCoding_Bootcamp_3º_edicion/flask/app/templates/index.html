@@ -1,15 +1,16 @@
 {%  extends 'base.html' %}
 {% block title %}Exchanger{% endblock %}
 {% block body %}
-    <table border="1">
+    <table >
         <tr>
-            <th>Fecha</th>
-            <th>Descrispcion</th>
-            <th>Moneda comparada</th>
-            <th>Cantidad comparada</th>
-            <th>Precio unitario</th>
-            <th>Unidad pagada</th>
-            <th>Cantidad pagada</th>
+            <th class="header">Fecha</th>
+            <th class="header">Descrispcion</th>
+            <th class="header" >Descrispcion</th>
+            <th class="header">Moneda comparada</th>
+            <th class="header">Cantidad comparada</th>
+            <th class="header">Precio unitario</th>
+            <th class="header">Unidad pagada</th>
+            <th class="header">Cantidad pagada</th>
         </tr>
         {% for movimiento in movimientos %}
         <tr>

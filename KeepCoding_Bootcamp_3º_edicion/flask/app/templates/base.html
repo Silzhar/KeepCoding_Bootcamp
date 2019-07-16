@@ -3,17 +3,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title%}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="./static/css/normalize.css">
+    <link rel="stylesheet" href="./static/css/skeleton.css">
+
+    <!----style>
+    * {
+        font-family:  'Courier New', Courier, monospace;
+    }
+
+    .header {
+        background-color: gray;
+        color: white;
+    }
+    .mensajes-error {
+        color: red;
+    }
+    </style-->
 </head>
 <body>
+    
     <header>
-        <p>
-            <a href="./">Inicio</a> | <a href="./nuevacompra">Compra</a>
-        </p>
+        <h1>Simple Exchanger</h1>
     </header>
-    {% block body%}{% endblock %}
+    <div class="container">
+        <p class="menu">
+            <a href="./">Inicio</a> | <a href="/nuevacompra">Compra</a>
+        </p>
+        {% block body %}{% endblock%}
+    </div>
+    <div class="mensajes-error">
+            {% if errores %}
+                <ul class="flash-messages">
+                {% for error in errores %}
+                    <li>{{ error }}</li> 
+                {% endfor %}   
+                </ul>
+            {% endif %}
+    </div>
     <footer>
-        <p>&copy; 2019 </p>    
+        <p>Criptobook &copy; 2019</p>
     </footer>
 </body>
 </html>
