@@ -1,0 +1,19 @@
+
+.header {
+    background-color: rgb(77, 171, 248);
+    color: white;
+    padding-top: 16px
+}
+.mensajes-error {
+    background-color: salmon;
+    color: rebeccapurple;
+    font-weight:  bold;
+    line-height: 0.8em;
+
+}
+
+.flash-messages {
+    list-style: armenian;
+    
+}
+
