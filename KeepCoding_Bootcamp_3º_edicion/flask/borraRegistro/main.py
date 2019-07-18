@@ -4,8 +4,18 @@ ficherosalida = open('nuevosmovimientos.txt', 'w')
 ix = int(input('Registro a borrar :'))
 
 
-contador = 0
+contador = 1
 
+for linea in ficheroentrada:
+    if contador != ix:
+        ficherosalida.write(linea)
+    contador += 1
+    
+ficheroentrada.close()
+ficherosalida.close()
+
+
+'''
 linea = ficheroentrada.readline()  
 
 while linea != '': # no graba el archivo 
@@ -20,6 +30,8 @@ while linea != '': # no graba el archivo
 
 ficheroentrada.close()
 ficherosalida.close()    
+
+'''
 
 '''
 
