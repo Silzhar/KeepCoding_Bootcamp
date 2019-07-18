@@ -1,5 +1,10 @@
-ficheroentrada = open('movimientos.txt', 'r')
-ficherosalida = open('nuevosmovimientos.txt', 'w')
+from os import remove , rename
+
+FORIGINAL = 'movimientos.txt'
+FCOPIA = 'nuevosmovimientos.txt'
+
+ficheroentrada = open( FORIGINAL, 'r')
+ficherosalida = open(FCOPIA , 'w')
 
 ix = int(input('Registro a borrar :'))
 
@@ -14,6 +19,8 @@ for linea in ficheroentrada:
 ficheroentrada.close()
 ficherosalida.close()
 
+remove(FORIGINAL)
+rename(FCOPIA , FORIGINAL)
 
 '''
 linea = ficheroentrada.readline()  
