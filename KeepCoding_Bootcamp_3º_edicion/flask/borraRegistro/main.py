@@ -6,14 +6,20 @@ ix = int(input('Registro a borrar :'))
 
 contador = 0
 
-linea = ficheroentrada.readline()  # graba el primero 3 veces 
+linea = ficheroentrada.readline()  
 
-for linea in ficheroentrada:
-    while contador != ix:
-        ficheroentrada.readline()
-        ficherosalida.write(linea)
+while linea != '': # no graba el archivo 
 
+    while contador != ix:  
+        try:
+            linea = ficheroentrada.readline()
+            ficherosalida.write(linea)
+        except ValueError:
+            print(ValueError)
         contador += 1
+
+ficheroentrada.close()
+ficherosalida.close()    
 
 '''
 
@@ -42,5 +48,12 @@ while contador != ix:  # sale en el registro que se ha de borrar
         print(ValueError)
     contador += 1
 
+
+for linea in ficheroentrada:
+    while contador != ix:
+        ficheroentrada.readline()
+        ficherosalida.write(linea)
+
+        contador += 1
 
  '''
