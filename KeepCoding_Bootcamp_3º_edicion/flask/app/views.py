@@ -69,6 +69,26 @@ def borrar(ix):
     rename(ficheronuevo, ficheromovimientos)
 
 
+def modificar(ix):
+    fe = open(ficheromovimientos, 'r')
+    fs = open(ficheronuevo, 'w')
+
+    contador = 1
+    for linea in fe:
+        if contador != ix:
+            fs.write(linea)
+        else:
+            modificacion = redirect(url_for('nuevacompra.html'))  
+            fs.write(modificacion)
+        contador += 1
+    fe.close()
+    fs.close()
+
+    remove(ficheromovimientos)
+    rename(ficheronuevo, ficheromovimientos)
+
+
+
 def validar(values):
     errores = []
     if values['fecha'] == '':
