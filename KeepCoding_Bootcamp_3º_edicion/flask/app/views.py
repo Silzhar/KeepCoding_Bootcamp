@@ -1,7 +1,7 @@
 from app import app
 from flask import render_template, request, redirect, url_for, flash
 import csv
-from os import remove, rename
+from os import remove, rename,  getresgid
 
 ficheromovimientos = 'data/movimientos.txt'
 ficheronuevo = 'data/nuevomovimientos.txt'
@@ -72,21 +72,25 @@ def borrar(ix):
 def modificar(ix):
     fe = open(ficheromovimientos, 'r')
     fs = open(ficheronuevo, 'w')
-
     contador = 1
-    for linea in fe:
-        if contador != ix:
-            fs.write(linea)
-        else:
-            modificacion = redirect(url_for('nuevacompra.html'))  
-            fs.write(modificacion)
-        contador += 1
+
+    if request.method == 'POST':
+        modificacion = getresgid(request.values(compra))
+    
+        for linea in fe:
+            redirect(url_for('index')) 
+            if contador == ix:
+                fs.write(modificacion)
+
     fe.close()
     fs.close()
-
     remove(ficheromovimientos)
     rename(ficheronuevo, ficheromovimientos)
+    return redirect(url_for('index')) 
+         #    return render_template('index.html', movimientos = linea)
+    
 
+   
 
 
 def validar(values):
