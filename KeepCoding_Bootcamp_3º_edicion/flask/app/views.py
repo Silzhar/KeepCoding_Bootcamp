@@ -76,18 +76,17 @@ def modificar(ix):
     keyButton = request.values['btnselected'] == 'radio'
 
     if request.method == 'POST':
-        modificacion =  keyButton                  
-    
-        for modificacion in fe:
+        modificacion = keyButton                  
+
+        if contador == ix:
             redirect(url_for('compra')) 
-            if contador == ix:
-                fs.write(modificacion)
+            fs.write(modificacion)
 
     fe.close()
     fs.close()
-    remove(ficheromovimientos)
-    rename(ficheronuevo, ficheromovimientos)
-    return redirect(url_for('index')) 
+ #   remove(ficheromovimientos)
+ #  rename(ficheronuevo, ficheromovimientos)
+    return redirect(url_for('compra')) 
 
          #    return render_template('index.html', movimientos = linea)
     
