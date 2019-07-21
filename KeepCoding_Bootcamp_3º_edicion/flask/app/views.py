@@ -73,12 +73,13 @@ def modificar(ix):
     fe = open(ficheromovimientos, 'r')
     fs = open(ficheronuevo, 'w')
     contador = 1
+    keyButton = request.values['btnselected'] == 'radio'
 
     if request.method == 'POST':
-        modificacion = getresgid(request.values(compra))
+        modificacion =  keyButton                  
     
-        for linea in fe:
-            redirect(url_for('index')) 
+        for modificacion in fe:
+            redirect(url_for('compra')) 
             if contador == ix:
                 fs.write(modificacion)
 
@@ -87,10 +88,11 @@ def modificar(ix):
     remove(ficheromovimientos)
     rename(ficheronuevo, ficheromovimientos)
     return redirect(url_for('index')) 
+
          #    return render_template('index.html', movimientos = linea)
     
 
-   
+   #    getresgid(request.values.get())
 
 
 def validar(values):
