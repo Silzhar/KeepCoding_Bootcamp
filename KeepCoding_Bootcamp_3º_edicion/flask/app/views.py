@@ -42,8 +42,17 @@ def compra():
         fMovimientos.close()
         return redirect(url_for('index'))
 
+@app.route('/modificar', methods=['GET', 'POST'])
+def update():
+    if request.method == 'GET':
+        if request.values.get('ix'):
+            movimiento = recuperarregistro(request.values.get('ix'))
+            return render_template('update.html', registro_seleccionado=movimiento)
+    else:
+        return ('Es un post')
 
-@app.route('/procesarregistro', methods=['GET','POST'])
+
+@app.route('/procesarregistro', methods=['POST'])
 def procesar():
     if request.values.get('ix'):
         if request.values['btnselected'] == 'Borrar':
@@ -51,6 +60,22 @@ def procesar():
         else:
             modificar(int(request.values['ix']))
     return redirect(url_for('index'))
+
+
+def recuperarregistro(ix):
+    ix = int(ix)
+    fe = open(ficheromovimientos, 'r')
+    csvreader = csv.reader(fe, delimiter=',', quotechar='"')
+    contador = 1
+
+    for linea in csvreader:
+        if contador == ix:
+            fe.close()
+            return linea
+        contador += 1
+
+    fe.close()
+
 
 
 def borrar(ix):
