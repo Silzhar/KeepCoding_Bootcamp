@@ -43,7 +43,7 @@ def compra():
         return redirect(url_for('index'))
 
 
-@app.route('/procesarregistro', methods=['POST'])
+@app.route('/procesarregistro', methods=['GET','POST'])
 def procesar():
     if request.values.get('ix'):
         if request.values['btnselected'] == 'Borrar':
@@ -70,28 +70,31 @@ def borrar(ix):
 
 
 def modificar(ix):
-    fe = open(ficheromovimientos, 'r')
-    fs = open(ficheronuevo, 'w')
-    contador = 1
-    keyButton = request.values['btnselected'] == 'radio'
+  
+    if request.method == 'GET':
+        registro = request.value('ix')
+        return redirect(url_for('nuevacompra.html'))
+    else:
+        msg = validar(request.values)
+        if msg != True:
+            return  redirect(url_for('compra', errores=msg))  
 
-    if request.method == 'POST':
-        modificacion = keyButton                  
-
-        if contador == ix:
-            redirect(url_for('compra')) 
-            fs.write(modificacion)
-
-    fe.close()
-    fs.close()
- #   remove(ficheromovimientos)
- #  rename(ficheronuevo, ficheromovimientos)
-    return redirect(url_for('compra')) 
-
-         #    return render_template('index.html', movimientos = linea)
     
+        fMovimientos = open(ficheromovimientos, "a+")
+        precioUnitario = float(request.values['cantidadPagada'])/float(request.values['cantidadComprada'])
+        registro = '{},"{}",{},{},{},{},{}\n'.format(request.values['fecha'], 
+                    request.values['concepto'], 
+                    request.values['monedaComprada'], 
+                    request.values['cantidadComprada'], 
+                    request.values['monedaPagada'], 
+                    request.values['cantidadPagada'], 
+                    precioUnitario)
+        fMovimientos.seek(registro, ix)
+        fMovimientos.close()
+        return redirect(url_for('index'))
+        
+        
 
-   #    getresgid(request.values.get())
 
 
 def validar(values):
@@ -112,3 +115,32 @@ def validar(values):
         return True
     else:
         return errores 
+
+
+'''
+
+
+
+def modificar(ix):
+fe = open(ficheromovimientos, 'r')
+fs = open(ficheronuevo, 'w')
+contador = 1
+keyButton = request.values['btnselected'] == 'radio'
+
+if request.method == 'POST':
+    modificacion = keyButton                  
+
+    if contador == ix:
+        return redirect(url_for('compra')) 
+        fs.write(modificacion)
+
+fe.close()
+fs.close()
+#   remove(ficheromovimientos)
+#  rename(ficheronuevo, ficheromovimientos)
+return redirect(url_for('compra')) 
+
+        #    return render_template('index.html', movimientos = linea)
+
+
+#    getresgid(request.values.get())   '''
