@@ -71,27 +71,25 @@ def borrar(ix):
 
 def modificar(ix):
   
-    if request.method == 'GET':
-        registro = request.value('ix')
-        return redirect(url_for('nuevacompra.html'))
-    else:
-        msg = validar(request.values)
-        if msg != True:
-            return  redirect(url_for('compra', errores=msg))  
+    fe = open(ficheromovimientos, 'r')
+    fs = open(ficheronuevo, 'w')
+    contador = 1
+    keyButton = request.values['btnselected'] == 'radio'
 
+    if request.method == 'POST':
+        modificacion =  keyButton                  
     
-        fMovimientos = open(ficheromovimientos, "a+")
-        precioUnitario = float(request.values['cantidadPagada'])/float(request.values['cantidadComprada'])
-        registro = '{},"{}",{},{},{},{},{}\n'.format(request.values['fecha'], 
-                    request.values['concepto'], 
-                    request.values['monedaComprada'], 
-                    request.values['cantidadComprada'], 
-                    request.values['monedaPagada'], 
-                    request.values['cantidadPagada'], 
-                    precioUnitario)
-        fMovimientos.seek(registro, ix)
-        fMovimientos.close()
-        return redirect(url_for('index'))
+    #    for modificacion in fe:
+        if contador == ix:
+            fs.seek(modificacion,ix)
+        return redirect(url_for('compra')) 
+        
+
+    fe.close()
+    fs.close()
+    remove(ficheromovimientos)
+    rename(ficheronuevo, ficheromovimientos)
+    return redirect(url_for('index')) 
         
         
 
@@ -117,30 +115,28 @@ def validar(values):
         return errores 
 
 
-'''
+
+''''
 
 
-
-def modificar(ix):
-fe = open(ficheromovimientos, 'r')
-fs = open(ficheronuevo, 'w')
-contador = 1
-keyButton = request.values['btnselected'] == 'radio'
-
-if request.method == 'POST':
-    modificacion = keyButton                  
-
-    if contador == ix:
+    if request.method == 'GET':
+        registro = request.value('ix')
         return redirect(url_for('compra')) 
-        fs.write(modificacion)
+    else:
+        msg = validar(request.values)
+        if msg != True:
+            return  redirect(url_for('compra', errores=msg))  
 
-fe.close()
-fs.close()
-#   remove(ficheromovimientos)
-#  rename(ficheronuevo, ficheromovimientos)
-return redirect(url_for('compra')) 
-
-        #    return render_template('index.html', movimientos = linea)
-
-
-#    getresgid(request.values.get())   '''
+    
+        fMovimientos = open(ficheromovimientos, "a+")
+        precioUnitario = float(request.values['cantidadPagada'])/float(request.values['cantidadComprada'])
+        registro = '{},"{}",{},{},{},{},{}\n'.format(request.values['fecha'], 
+                    request.values['concepto'], 
+                    request.values['monedaComprada'], 
+                    request.values['cantidadComprada'], 
+                    request.values['monedaPagada'], 
+                    request.values['cantidadPagada'], 
+                    precioUnitario)
+        fMovimientos.seek(registro, ix)
+        fMovimientos.close()
+        return redirect(url_for('index'))   '''
