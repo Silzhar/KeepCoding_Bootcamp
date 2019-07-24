@@ -31,16 +31,6 @@
         <p class="menu">
             <a href="./">Inicio</a> | <a href="/nuevacompra">Compra</a>
         </p>
-        {% if errores %}
-        <div class="mensajes-error">
-            <ul class="flash-messages">
-            {% for error in errores %}
-                <li>{{ error }}</li>    
-            {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-    
         {% block body %}{% endblock%}
     </div>
     <footer class="container">
@@ -48,3 +38,4 @@
     </footer>
 </body>
 </html>
+      
