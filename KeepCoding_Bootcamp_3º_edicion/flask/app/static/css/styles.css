@@ -5,7 +5,7 @@
     padding-top: 16px
 }
 .field-error {
-    color: rebeccapurple;
+    color: rgb(150, 77, 223);
     font-weight:  bold;
     font-size: 0.8em;
     margin-top: -8px;
