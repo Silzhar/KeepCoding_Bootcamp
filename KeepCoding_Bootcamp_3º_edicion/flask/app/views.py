@@ -1,9 +1,9 @@
 
 from app import app
 from flask import render_template, request, redirect, url_for, flash
-import csv ,sqlite3
+import csv, sqlite3
 from os import remove, rename
-from app.templates.forms import CompraForm , UpdateForm
+from app.forms import CompraForm, UpdateForm
 
 ficheromovimientos = 'data/movimientos.txt'
 ficheronuevo = 'data/nuevomovimientos.txt'
@@ -201,9 +201,6 @@ def validar(values):
         return True
     else:
         return errores    
-
-
-
 
 ''''
 
