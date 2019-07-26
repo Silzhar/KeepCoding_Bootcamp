@@ -200,8 +200,7 @@ def validar(values):
     if len(errores) == 0:
         return True
     else:
-        return errores    
-
+        return errores  
 ''''
 
 msg = validar(request.values)
