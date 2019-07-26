@@ -1,22 +1,32 @@
 
 from app import app
 from flask import render_template, request, redirect, url_for, flash
-import csv
+import csv ,sqlite3
 from os import remove, rename
 from app.templates.forms import CompraForm , UpdateForm
 
 ficheromovimientos = 'data/movimientos.txt'
 ficheronuevo = 'data/nuevomovimientos.txt'
+database = 'data/movimientos.db'
 
 @app.route('/')
 def index():
     #leer movimientos
+    conn = sqlite3.connect(database)
+    cursor = conn.cursor()
+    rows = cursor.execute("select fecha, concepto, monedaComprada, cantidadComprada, monedaPagada, cantidadPagada, id from movimientos order by fecha;")
+    movements = []
+    for row in rows:
+        print(row)
+        movements.append(row)
+    '''
     fMovimientos = open(ficheromovimientos, "r")
     csvreader = csv.reader(fMovimientos, delimiter=',', quotechar='"')
     movements = []
     for movimiento in csvreader: 
         movements.append(movimiento)
-
+    '''
+    conn.close()
     #enviar movimientos a index.html
     return render_template('index.html', movimientos=movements)
 
@@ -28,6 +38,23 @@ def compra():
         return render_template('nuevacompra.html', form=form)
     else:
         if form.validate():
+            conn = sqlite3.connect(database)
+            cursor = conn.cursor()
+            query = '''
+            INSERT INTO movimientos 
+                (fecha, concepto, monedaComprada, cantidadComprada, monedaPagada, cantidadPagada)
+                values (?, ?, ?, ?, ?, ?);
+            '''
+            rows = cursor.execute(query,(request.form['fecha'],
+                                         request.form['concepto'], 
+                                         request.form['monedaComprada'], 
+                                         request.form['cantidadComprada'], 
+                                         request.form['monedaPagada'], 
+                                         request.form['cantidadPagada']
+            ))
+            conn.commit()
+            conn.close()
+            '''
             fMovimientos = open(ficheromovimientos, "a+")
             precioUnitario = float(request.values['cantidadPagada'])/float(request.values['cantidadComprada'])
             registro = '{},"{}",{},{},{},{},{}\n'.format(request.values['fecha'], 
@@ -39,6 +66,7 @@ def compra():
                         precioUnitario)
             fMovimientos.write(registro)
             fMovimientos.close()
+            '''
             return redirect(url_for('index'))
 
         return render_template('nuevacompra.html', form=form)
@@ -69,6 +97,7 @@ def update():
             '''
             form.ix.data = ix
             return render_template('update.html', form=form)
+        
     else:
         if form.validate():
             registro_seleccionado = [
@@ -171,7 +200,8 @@ def validar(values):
     if len(errores) == 0:
         return True
     else:
-        return errores  
+        return errores    
+
 
 
 
