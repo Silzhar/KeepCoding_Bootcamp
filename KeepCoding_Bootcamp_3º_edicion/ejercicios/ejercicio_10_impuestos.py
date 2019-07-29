@@ -37,10 +37,14 @@ totalEntradas = entradas(Precios=[])
 
 def porcentaje(tasa):
     precios = []
+    sumarTasa = []
     for precio in tasa:
         precioTasa = (precio * 5.5) / 100
         precios.append(precioTasa)
-        sumarTasa = tasa + precios
+
+    for i in range(len(precios)):
+        sumarTasa.append(precios[i]+tasa[i])
+        
 
     return sumarTasa
 
