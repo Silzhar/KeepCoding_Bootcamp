@@ -13,7 +13,7 @@ def objetos():
 
     return totalObjetos
 
-totalObjetos = objetos() 
+
 
 
 def entradas(Precios=[]):
@@ -32,11 +32,11 @@ def entradas(Precios=[]):
         
     return Precios
 
-totalEntradas = entradas(Precios=[])
 
+
+precios = []
 
 def porcentaje(tasa):
-    precios = []
     sumarTasa = []
     for precio in tasa:
         precioTasa = (precio * 5.5) / 100
@@ -48,8 +48,18 @@ def porcentaje(tasa):
 
     return sumarTasa
 
+
+totalObjetos = objetos() 
+totalEntradas = entradas(Precios=[])
 impuesto = porcentaje(totalEntradas)
 
-print(totalEntradas)
 
-print(impuesto)
+print(".........................................................")
+print(" ")
+print("Precios sin impuesto :",totalEntradas)
+print(" ")
+print("Tasa aplicada de 5.5% sobre los valores anteriores :",precios)
+print(" ")
+print("Coste total :",impuesto)
+print(" ")
+print(".........................................................")
