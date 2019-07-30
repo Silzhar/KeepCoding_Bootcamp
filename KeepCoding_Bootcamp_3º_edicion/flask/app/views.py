@@ -31,7 +31,7 @@ def index():
 
     _dMonedas = diccionarioMonedas()
 
-    rows = cursor.execute("select fecha, concepto, id_monedaComprada, cantidadComprada, id_monedaPagada, cantidadPagada, id from movimientos order by fecha;")
+    rows = cursor.execute("select fecha, concepto, id_moneda_comprada, cantidadComprada, id_moneda_pagada, cantidadPagada, id from movimientos order by fecha;")
 
     movements = []
     for row in rows:
@@ -57,13 +57,14 @@ def index():
 @app.route('/nuevacompra', methods=['GET', 'POST'])
 def compra():
     form = CompraForm(request.form)
-    form.monedaComprada.data = int(form.monedaComprada.data)
-    form.monedaPagada.data = int(form.monedaPagada.data)
+    
 
 
     if request.method == 'GET':
         return render_template('nuevacompra.html', form=form)
     else:
+        form.monedaComprada.data = int(form.monedaComprada.data)
+        form.monedaPagada.data = int(form.monedaPagada.data)
         if form.validate():
             conn = sqlite3.connect(database)
             cursor = conn.cursor()
