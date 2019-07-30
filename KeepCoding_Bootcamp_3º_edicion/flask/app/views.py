@@ -9,15 +9,39 @@ ficheromovimientos = 'data/movimientos.txt'
 ficheronuevo = 'data/nuevomovimientos.txt'
 database = 'data/movimientos.db'
 
+def diccionarioMonedas():
+    conn = sqlite3.connect(database)
+    cursor = conn.cursor()
+
+    query = '''
+            SELECT id, symbol FROM monedas;
+            '''
+    rows = cursor.execute(query)
+    resp = {}
+    for row in rows:
+        resp[row[0]] = row[1]
+    conn.close()
+    return resp
+
 @app.route('/')
 def index():
     #leer movimientos
     conn = sqlite3.connect(database)
     cursor = conn.cursor()
-    rows = cursor.execute("select fecha, concepto, monedaComprada, cantidadComprada, monedaPagada, cantidadPagada, id from movimientos order by fecha;")
+
+    _dMonedas = diccionarioMonedas()
+
+    rows = cursor.execute("select fecha, concepto, id_monedaComprada, cantidadComprada, id_monedaPagada, cantidadPagada, id from movimientos order by fecha;")
+
     movements = []
     for row in rows:
         print(row)
+        row = list(row)
+        nombreMoneda = _dMonedas[row[2]]
+        row[2] = nombreMoneda
+
+        nombreMoneda = _dMonedas[row[4]]
+        row[4] = nombreMoneda
         movements.append(row)
     '''
     fMovimientos = open(ficheromovimientos, "r")
@@ -33,6 +57,9 @@ def index():
 @app.route('/nuevacompra', methods=['GET', 'POST'])
 def compra():
     form = CompraForm(request.form)
+    form.monedaComprada.data = int(form.monedaComprada.data)
+    form.monedaPagada.data = int(form.monedaPagada.data)
+
 
     if request.method == 'GET':
         return render_template('nuevacompra.html', form=form)
@@ -42,7 +69,7 @@ def compra():
             cursor = conn.cursor()
             query = '''
             INSERT INTO movimientos 
-                (fecha, concepto, monedaComprada, cantidadComprada, monedaPagada, cantidadPagada)
+                (fecha, concepto, id_monedaComprada, cantidadComprada, id_monedaPagada, cantidadPagada)
                 values (?, ?, ?, ?, ?, ?);
             '''
             rows = cursor.execute(query,(request.form['fecha'],
@@ -75,11 +102,13 @@ def compra():
 @app.route('/modificar', methods=['GET', 'POST'])
 def update():
     form = UpdateForm(request.form)
+
     if request.method == 'GET':
         if request.values.get('ix'):
-            movimiento, ix = recuperarregistro(request.values.get('ix'))
+            movimiento = recuperarregistro(request.values.get('ix'))
+            print(movimiento)
 
-            nombre = ['fecha', 'concepto', 'monedaComprada', 'cantidadComprada', 'monedaPagada', 'cantidadPagada']
+            nombre = ['ix', 'fecha', 'concepto', 'monedaComprada', 'cantidadComprada', 'monedaPagada', 'cantidadPagada']
             for i in range(len(nombre)):
                 form[nombre[i]].data = movimiento[i]
 
@@ -95,10 +124,12 @@ def update():
             form.monedaPagada.data = movimiento[4]
             form.cantidadPagada.data = movimiento[5]
             '''
-            form.ix.data = ix
             return render_template('update.html', form=form)
         
     else:
+        form.monedaComprada.data = int(form.monedaComprada.data)
+        form.monedaPagada.data = int(form.monedaPagada.data)
+
         if form.validate():
             registro_seleccionado = [
                 form.fecha.data,
@@ -125,24 +156,58 @@ def procesar():
 
 def recuperarregistro(ix):
     ix = int(ix)
-    fe = open(ficheromovimientos, 'r')
-    csvreader = csv.reader(fe, delimiter=',', quotechar='"')
 
-    contador = 1
-    for linea in csvreader:
-        if contador == ix:
-            fe.close()
-            return linea, ix
-        contador += 1
+    conn = sqlite3.connect(database)
+    cursor = conn.cursor()
 
-    fe.close()
+    query = '''
+            select id, fecha, concepto, id_monedaComprada, cantidadComprada, id_monedaPagada, cantidadPagada from movimientos where id = ?;
+            '''
+
+    rows = cursor.execute(query, (ix,))
+    resp = []
+    for row in rows:
+        resp.append(row)
+
+    conn.close()
+
+    if len(resp) > 0:
+        registro = list(resp[0])
+        registro[3] = str(registro[3])
+        registro[5] = str(registro[5])
+        return registro
+    else:
+        return ()    
+
 
     
 def modificarregistro(values):
+    conn = sqlite3.connect(database)
+    cursor = conn.cursor()
+
+    query = '''
+        update movimientos 
+           set fecha = ?,
+               concepto = ?,
+               id_monedaComprada = ?,
+               cantidadComprada = ?,
+               id_monedaPagada = ?,
+               cantidadPagada = ?
+          where id = ?;
+          ''' 
+    rows = cursor.execute(query, (values.get('fecha'), values.get('concepto'),
+                                  values.get('monedaComprada'), values.get('cantidadComprada'),
+                                  values.get('monedaPagada'), values.get('cantidadPagada'),
+                                  values.get('ix')
+            ))
+    conn.commit()
+    conn.close() 
+
+
+    '''
     fe = open(ficheromovimientos, 'r')
     fs = open(ficheronuevo, 'w')
     ix = int(values.get('ix'))
-
     precioUnitario = float(values['cantidadPagada'])/float(values['cantidadComprada'])
     registro = '{},"{}",{},{},{},{},{}\n'.format(values['fecha'], 
                 values['concepto'], 
@@ -151,21 +216,17 @@ def modificarregistro(values):
                 values['monedaPagada'], 
                 values['cantidadPagada'], 
                 precioUnitario)
-
     contador = 1
     for linea in fe:
         if contador == ix:
             linea = registro
         fs.write(linea)
-
         contador += 1
-
     fe.close()
     fs.close()
-
     remove(ficheromovimientos)
     rename(ficheronuevo, ficheromovimientos)
-
+    '''
     
 def borrar(ix):
     fe = open(ficheromovimientos, 'r')
@@ -200,7 +261,9 @@ def validar(values):
     if len(errores) == 0:
         return True
     else:
-        return errores  
+        return errores    
+
+        
 ''''
 
 msg = validar(request.values)
