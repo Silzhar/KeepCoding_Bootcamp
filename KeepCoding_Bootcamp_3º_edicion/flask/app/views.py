@@ -70,34 +70,48 @@ def compra():
             cursor = conn.cursor()
             query = '''
             INSERT INTO movimientos 
-                (fecha, concepto, id_monedaComprada, cantidadComprada, id_monedaPagada, cantidadPagada)
+                (fecha, concepto, id_moneda_Comprada, cantidadComprada, id_moneda_pagada, cantidadPagada)
                 values (?, ?, ?, ?, ?, ?);
             '''
-            rows = cursor.execute(query,(request.form['fecha'],
-                                         request.form['concepto'], 
-                                         request.form['monedaComprada'], 
-                                         request.form['cantidadComprada'], 
-                                         request.form['monedaPagada'], 
-                                         request.form['cantidadPagada']
-            ))
+
+            try:
+                rows = cursor.execute(query,(request.form['fecha'],
+                                            request.form['concepto'], 
+                                            request.form['monedaComprada'], 
+                                            request.form['cantidadComprada'], 
+                                            request.form['monedaPagada'], 
+                                            request.form['cantidadPagada']
+                ))
+            except sqlite3.Error as e:
+                form.monedaComprada.data = str(form.monedaComprada.data)
+                form.monedaPagada.data = str(form.monedaPagada.data)
+                return render_template('nuevacompra.html', form=form)
+
+
             conn.commit()
             conn.close()
-            '''
-            fMovimientos = open(ficheromovimientos, "a+")
-            precioUnitario = float(request.values['cantidadPagada'])/float(request.values['cantidadComprada'])
-            registro = '{},"{}",{},{},{},{},{}\n'.format(request.values['fecha'], 
-                        request.values['concepto'], 
-                        request.values['monedaComprada'], 
-                        request.values['cantidadComprada'], 
-                        request.values['monedaPagada'], 
-                        request.values['cantidadPagada'], 
-                        precioUnitario)
-            fMovimientos.write(registro)
-            fMovimientos.close()
-            '''
             return redirect(url_for('index'))
 
+        form.errors['general'] = ['Error acceso a base de datos']
+
         return render_template('nuevacompra.html', form=form)
+
+        '''
+        fMovimientos = open(ficheromovimientos, "a+")
+        precioUnitario = float(request.values['cantidadPagada'])/float(request.values['cantidadComprada'])
+        registro = '{},"{}",{},{},{},{},{}\n'.format(request.values['fecha'], 
+                    request.values['concepto'], 
+                    request.values['monedaComprada'], 
+                    request.values['cantidadComprada'], 
+                    request.values['monedaPagada'], 
+                    request.values['cantidadPagada'], 
+                    precioUnitario)
+        fMovimientos.write(registro)
+        fMovimientos.close()
+        '''
+            
+
+        
 
 
 @app.route('/modificar', methods=['GET', 'POST'])
@@ -162,10 +176,12 @@ def recuperarregistro(ix):
     cursor = conn.cursor()
 
     query = '''
-            select id, fecha, concepto, id_monedaComprada, cantidadComprada, id_monedaPagada, cantidadPagada from movimientos where id = ?;
+            select id, fecha, concepto, id_moneda_comprada, cantidadComprada, id_moneda_pagada, cantidadPagada from movimientos where id = ?;
             '''
 
     rows = cursor.execute(query, (ix,))
+
+
     resp = []
     for row in rows:
         resp.append(row)
@@ -230,6 +246,28 @@ def modificarregistro(values):
     '''
     
 def borrar(ix):
+    conn = sqlite3.connect(database)
+    cursor = conn.cursor()
+
+    query = '''
+            delete from movimientos
+            where id = ?;
+            '''
+
+    try:
+        rows = cursor.execute(query, (ix,))
+    except Exception as e:
+        print(e)
+        return
+
+    conn.commit()
+    conn.close()
+
+
+
+
+
+    '''
     fe = open(ficheromovimientos, 'r')
     fs = open(ficheronuevo, 'w')
 
@@ -242,7 +280,7 @@ def borrar(ix):
     fs.close()
 
     remove(ficheromovimientos)
-    rename(ficheronuevo, ficheromovimientos)
+    rename(ficheronuevo, ficheromovimientos)   '''
 
 
 def validar(values):
