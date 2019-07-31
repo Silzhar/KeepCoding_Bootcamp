@@ -31,4 +31,3 @@ def selectMovement(fecha, monedaComprada):
     rows = cursor.execute(query, (fecha, monedaComprada))
     for row in rows:
         print(row)
-

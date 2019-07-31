@@ -15,7 +15,7 @@ def consultaMonedas():
             SELECT id, name FROM monedas;
             '''
 
-    rows = cursor.execute(query) #Luis se va a la fruteria y deja las patatas en rows
+    rows = cursor.execute(query) 
 
     resp = []
     for row in rows:

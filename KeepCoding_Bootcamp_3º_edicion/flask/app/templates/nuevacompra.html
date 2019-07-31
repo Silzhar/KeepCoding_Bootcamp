@@ -6,7 +6,7 @@
 
     {% if form.errors['general'] %}
         {% for error in form.errors['general'] %}
-            <p class="field-error">{{ error }}</p>
+            <p class="general-error"> {{ error }} </p>
         {% endfor %}
     {% endif %}
     <form action="nuevacompra" method="POST">

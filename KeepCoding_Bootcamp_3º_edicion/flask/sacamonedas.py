@@ -5,19 +5,17 @@ cursor = conn.cursor()
 
 def consultaMonedas():
     query = '''
-            SELECT symbol,name FROM MONEDAS:
+            SELECT symbol, name FROM monedas;
             '''
 
-    rows = cursor.execute(query)
+    rows = cursor.execute(query) 
 
-    respuesta = []
+    resp = []
     for row in rows:
-        respuesta.append(row)
-
+        resp.append(row)
 
     conn.close()
-    return respuesta
-
+    return resp
 
 def diccMonedas():
     query = '''
